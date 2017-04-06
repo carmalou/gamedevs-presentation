@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Free yourself from the Browser with Electron</title>
+    <title>Free your game from the Browser with Electron</title>
     <meta charset="utf-8">
     <style>
       @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
@@ -19,7 +19,6 @@
       .inverse {
         background: #272822;
         color: #9b9c96;
-        /*text-shadow: 0 0 20px #333;*/
       }
     </style>
   </head>
@@ -28,7 +27,7 @@
 
 class: center, middle, inverse, inverse
 
-# Free yourself from the Browser with [Electron](http://electron.atom.io/)
+# Free your game from the Browser with [Electron](http://electron.atom.io/)
 ---
 class: center, middle, inverse
 
@@ -58,7 +57,7 @@ class: left, middle, inverse
 ---
 class: center, middle, inverse
 
-# Oh, Chromium? That's the black magic, right?
+# Chromium? That's the black magic, right?
 ---
 class: left, middle, inverse
 
@@ -78,7 +77,7 @@ class: center, middle, inverse
 ---
 class: left, middle, inverse
 
-### When the application opens, it uses a chromium window to display the files, which allows the use of HTML, CSS, and JavaScript.
+### When the application opens, it uses a Chromium window to display the files, which allows the use of HTML, CSS, and JavaScript.
 ---
 class: center, middle, inverse
 
@@ -90,15 +89,12 @@ class: left, middle, inverse
 ---
 class: center, middle, inverse
 
-# Sounds kinda cool. But why would I leave the browser?
+# Sounds kinda cool.
+# But why would I leave the browser?
 ---
 class: left, middle, inverse
 
-### With Electron we can use essentially the same code to run desktop apps and websites. This opens up a world of possibilities.
----
-class: center, middle, inverse
-
-# Free yourself from the Browser
+### With Electron we can use the same code to run desktop apps and websites. This opens up a world of possibilities.
 ---
 class: center, middle, inverse
 
@@ -146,48 +142,9 @@ class: center, middle, inverse
 ---
 class: center, middle, inverse
 
-# Examples
----
-class: left, middle, inverse
-
-## - [Slack](https://slack.com/)
-## - [Atom](https://atom.io/)
-## - [Visual Studio Code](https://code.visualstudio.com)
-## - [Mapbox Studio Classic](https://www.mapbox.com/help/define-mapbox-studio-classic/)
----
-class: center, middle, inverse
-
-# Here are some you might not be familiar with
----
-class: center, middle, inverse
-
-# [HyperTerm](https://hyperterm.org/)
-
-### A cool terminal emulator to run bash commands. And, it's inspectable.
----
-class: center, middle, inverse
-
-# [Brave](https://brave.com/)
-
-### A browser that blocks ads and trackers
----
-class: center, middle, inverse
-
-# [Gitify](http://gitify.io/)
-
-### Github notifications in the menubar
----
-class: center, middle, inverse
-
-# [Shake](http://kurisubrooks.com/shake)
-
-### Earthquake early warning program for Japan
----
-class: center, middle, inverse
-
 # Ok, I'm in. Where should I start?
 ---
-class: center, middle, inverse
+class: left, middle, inverse
 
 # Electron apps have three basic parts
 
@@ -197,9 +154,11 @@ class: center, middle, inverse
 ---
 class: center, middle, inverse
 
-# Window
+# Create App Window
 ---
 class: left, middle, inverse
+
+# main.js
 
 ```javascript
 var electron = require('electron');
@@ -221,153 +180,28 @@ function createWindow () {
 }
 ```
 ---
-class: center, middle, inverse
-
-# Open finder
----
 class: left, middle, inverse
+
+# package.json
 
 ```javascript
-var shell = require('electron').shell;
-
-shell.showItemInFolder('full/file/path.extension');
-```
----
-class: center, middle, inverse
-
-# Open files
----
-class: left, middle, inverse
-
-```javascript
-var shell = require('electron').shell;
-
-shell.openItem('full/file/path.extension');
-```
----
-class: center, middle, inverse
-
-# Get system information
----
-class: left, middle, inverse
-
-```javascript
-var os = require('os');
-var whatIsMyComp = os.platform();
-
-if(whatIsMyComp == 'darwin') {
-  console.log('you are on mac');
-  useMacFilePath();
-}
-
-if(whatIsMyComp == 'win32') {
-  console.log('you are on windows');
-  useWindowsFilePath();
-}
-
-if(whatIsMyComp == 'linux') {
-  console.log('you are on linux');
-  useLinuxFilePath();
-}
-```
----
-class: center, middle, inverse
-
-# Get screen size
----
-class: left, middle, inverse
-
-```javascript
-var electronScreen = require('electron').screen;
-var size = electronScreen.getPrimaryDisplay().size;
-
-console.log(size.width); // width of screen in pixels
-console.log(size.height); // height of screen in pixels
-```
----
-class: center, middle, inverse
-
-# Communicate between processes
----
-class: center, middle, inverse
-
-# Main process
----
-class: left, middle, inverse
-
-## - Handles opening and closing windows
-## - Can communicate with renderer process
-## - Receives messages on `ipcMain`
-## - Sends messages on `webContents`
----
-class: center, middle, inverse
-
-# Renderer process
----
-class: left, middle, inverse
-
-## - Controller for window
-## - Each window has its own renderer process
-## - Sends and receives messages on `ipcRenderer`
----
-
-  <p>Hi! My name is <span id="name">BLANK</span>.</p>
-
----
-class: left, middle, inverse
-
-# renderer.js sends message to main.js
-
-```javascript
-function openTheWindow() {
-  ipcRenderer.send('open-name-window');
-}```
----
-class: left, middle, inverse
-
-# main.js receives message from renderer.js
-
-```javascript
-ipcMain.on('open-name-window', function() {
-  if(nameWindow != undefined) {
-    return;
+"name": "electron_quick_start",
+  "version": "1.0.68",
+  "description": "A minimal Electron application",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
   }
-  nameWindow = new BrowserWindow({ width: 400, height: 300 });
-  nameWindow.loadURL(`file://${__dirname}/changeName.html`);
-  nameWindow.on('closed', function() {
-    nameWindow = null;
-  });
-});
 ```
 ---
-class: left, middle, inverse
+class: center, middle, inverse
 
-# new renderer process sends message to main.js
-
-```javascript
-function sendNameBack(event) {
-  event.preventDefault();
-  var tmpName = document.getElementById('newName').value;
-  ipcRenderer.send('update-the-name', tmpName);
-}
-```
+# Package your app with [Electron Packager](link)
 ---
 class: left, middle, inverse
+## npm install electron-packager -g
 
-# main.js sends message to main renderer window
-
-```javascript
-ipcMain.on('update-the-name', function(event, name) {
-  // communicate with the window that sent the initial message
-  // event.sender.send('render-the-name', name);
-
-  // communicate with a specific window
-  mainWindow.webContents.send('render-the-name', name);
-
-  // close new window
-  nameWindow.close();
-});
-```
+#### "build-mac": "electron-packager /Users/carmenlong/Desktop/windows-comms/src windows-comms --out /Users/carmenlong/Desktop/windows-comms/build --platform=darwin --arch=x64 --overwrite"
 ---
 class: center, middle, inverse
 
